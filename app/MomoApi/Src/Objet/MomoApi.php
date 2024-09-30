@@ -54,7 +54,8 @@ class MomoApi
             $token = $data->access_token;
             return $token;
         }
-        Log::channel("momoapi")->debug(json_decode($response->body()));
+
+        Log::channel("momoapi")->error("Erreur : " . $response->status() . " | Corps : " .$response->body());
         return null;
     }
 
