@@ -25,10 +25,10 @@ class Disbursement extends Command
      */
     public function handle()
     {
-        $this->info('COLLECTION REQUETE EN COURS.');
+        $this->info('DISBURSEMENT REQUETE EN COURS.');
 
-        \App\MomoApi\Src\Facades\MomoApi::collection();
+        \App\MomoApi\Src\Facades\MomoApi::disbursement();
 
-        $this->info('COLLECTION REQUETE TERMINEE');
+        $this->info('DISBURSEMENT REQUETE TERMINEE');
     }
 }

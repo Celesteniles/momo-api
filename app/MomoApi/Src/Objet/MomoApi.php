@@ -105,11 +105,11 @@ class MomoApi
         $response = Http::asJson()->withHeaders($headers)->post($endpoint, $params);
 
         if ($response->status() >= 200 && $response->status() < 210) {
-            Log::channel("momoapi")->debug("Success : " . $response->status() . " | Corps : " . $response->body());
+            Log::channel("momoapi")->info("Statut : " . $response->status() . " | Corps : " . $response->body() . " | Headers : " . $response->headers() . " | Json : " . $response->json());
             return "Tout s'est bien passé";
         }
 
-        Log::channel("momoapi")->error("Erreur : " . $response->status() . " | Corps : " . $response->body());
+        Log::channel("momoapi")->error("Erreur : " . $response->status() . " | Corps : " . $response->body() . " | Headers : " . $response->headers() . " | Json : " . $response->json());
         return "Une erreur est survenue lors du traitement";
     }
 
@@ -161,11 +161,11 @@ class MomoApi
         $response = Http::asJson()->withHeaders($headers)->post($endpoint, $params);
 
         if ($response->status() >= 200 && $response->status() < 210) {
-            Log::channel("momoapi")->debug("Success : " . $response->status() . " | Corps : " . $response->body());
+            Log::channel("momoapi")->info("Statut : " . $response->status() . " | Corps : " . $response->body() . " | Headers : " . $response->headers() . " | Json : " . $response->json());
             return "Tout s'est bien passé";
         }
 
-        Log::channel("momoapi")->error("Erreur : " . $response->status() . " | Corps : " . $response->body());
+        Log::channel("momoapi")->error("Erreur : " . $response->status() . " | Corps : " . $response->body() . " | Headers : " . $response->headers() . " | Json : " . $response->json());
         return "Une erreur est survenue lors du traitement";
     }
 }
