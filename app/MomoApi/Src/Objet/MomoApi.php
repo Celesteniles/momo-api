@@ -105,7 +105,7 @@ class MomoApi
         $response = Http::asJson()->withHeaders($headers)->post($endpoint, $params);
 
         if ($response->status() >= 200 && $response->status() < 210) {
-            Log::channel("momoapi")->error("Success : " . $response->status() . " | Corps : " . $response->body());
+            Log::channel("momoapi")->debug("Success : " . $response->status() . " | Corps : " . $response->body());
             return "Tout s'est bien passé";
         }
 
@@ -161,7 +161,7 @@ class MomoApi
         $response = Http::asJson()->withHeaders($headers)->post($endpoint, $params);
 
         if ($response->status() >= 200 && $response->status() < 210) {
-            Log::channel("momoapi")->error("Success : " . $response->status() . " | Corps : " . $response->body());
+            Log::channel("momoapi")->debug("Success : " . $response->status() . " | Corps : " . $response->body());
             return "Tout s'est bien passé";
         }
 
