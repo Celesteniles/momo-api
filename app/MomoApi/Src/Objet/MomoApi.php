@@ -125,7 +125,7 @@ class MomoApi
         }
 
         $uuid = Uuid::generate(4)->string;
-        $subscription_key = config('momoapi.headers.token.ocp_apim_subscription_key')[0];
+        $subscription_key = config('momoapi.headers.token.ocp_apim_subscription_key')[1];
 
         $headers = [
             "Authorization" => "Bearer " . $token,
