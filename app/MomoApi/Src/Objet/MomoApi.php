@@ -91,7 +91,7 @@ class MomoApi
             "externalId" => $transid,
             "payer" => [
                 "partyIdType" => "MSISDN",
-                "partyId" => "242067230202"
+                "partyId" => "242069234141"
             ],
             "payerMessage" => "Recharge Nokipay",
             "payeeNote" => "Momo_NOKIPAY"
@@ -113,7 +113,6 @@ class MomoApi
         Log::channel("momoapi")->error("Erreur : " . $response->status() . " | Corps : " . $response->body());
         return "Une erreur est survenue lors du traitement";
     }
-
 
     public function disbursement()
     {
@@ -140,7 +139,6 @@ class MomoApi
 
         $transid = rand(10000000, 999999999);
 
-
         $params = [
             "amount" => 100,
             "currency" => "XAF",
@@ -153,13 +151,14 @@ class MomoApi
             "payeeNote" => "Momo_NOKIPAY"
         ];
 
-
         $endpoint = config('momoapi.endpoints.pay_uri');
 
         $endpoint = str_replace(":target", "disbursement", $endpoint);
-        $endpoint = str_replace(":action", "deposit", $endpoint);
+        $endpoint = str_replace(":action", "transfer", $endpoint);
 
         $response = Http::asJson()->withHeaders($headers)->post($endpoint, $params);
+        // return $response;
+
 
         if ($response->status() >= 200 && $response->status() < 210) {
             Log::channel("momoapi")->info("Statut : " . $response->status() . " | Corps : " . $response->body());
@@ -168,5 +167,35 @@ class MomoApi
 
         Log::channel("momoapi")->error("Erreur : " . $response->status() . " | Corps : " . $response->body());
         return "Une erreur est survenue lors du traitement";
+    }
+
+    public function getAccountBalance()
+    {
+        $token = self::momoLoginToken("disbursement");
+        if ($token == null) {
+            Log::channel("momoapi")->error("erreur lors de la récupération du token");
+            return ["code" => "180", "msg" => "Une erreur est survenue lors du traitement"];
+        }
+
+        $headers = [
+            "Authorization" => "Bearer " . $token,
+            "Content-Type" => "application/json",
+            "Ocp-Apim-Subscription-Key" => config('momoapi.headers.token.ocp_apim_subscription_key')[1],
+            "X-Target-Environment" => config('momoapi.headers.token.x_target_environment'),
+            "Accept" => "application/json"
+            // "X-Callback-Url" => config("technodev.payment_provider.momo.headers.token.x_callback_url")
+        ];
+
+        $endpoint = config('momoapi.endpoints.account_balance');
+
+        $response = Http::asJson()->withHeaders($headers)->get($endpoint);
+
+        if ($response->status() == 200) {
+            $account = json_decode($response->body());
+            return $account;
+        }
+
+        Log::channel("technodev")->error("Erreur : " . $response->status() . " | Corps : " . $response->body());
+        return null;
     }
 }
