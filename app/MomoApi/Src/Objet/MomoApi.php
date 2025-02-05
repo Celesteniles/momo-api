@@ -54,7 +54,7 @@ class MomoApi
     /**
      * Handle collection operation
      */
-    public function collection(): array
+    public function collection($phone, $amount): array
     {
         $token = $this->momoLoginToken(self::TARGET_COLLECTION);
 
@@ -66,16 +66,16 @@ class MomoApi
         return $this->processPaymentRequest(
             self::TARGET_COLLECTION,
             $token,
-            '242067230202',
+            $phone,
             'payer',
-            200
+            $amount
         );
     }
 
     /**
      * Handle disbursement operation
      */
-    public function disbursement(): array
+    public function disbursement($phone, $amount): array
     {
         $token = $this->momoLoginToken(self::TARGET_DISBURSEMENT);
 
@@ -87,9 +87,9 @@ class MomoApi
         return $this->processPaymentRequest(
             self::TARGET_DISBURSEMENT,
             $token,
-            '242067230202',
+            $phone,
             'payee',
-            200
+            $amount
         );
     }
 
