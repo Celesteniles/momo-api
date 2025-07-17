@@ -113,6 +113,8 @@ class MomoApi
 
             $response = Http::asJson()->withHeaders($headers)->post($endpoint, $params);
 
+            Log::channel('momoapi')->info($response->body());
+
             return $this->handlePaymentResponse($response, $target);
         } catch (\Exception $e) {
             Log::channel('momoapi')->error(sprintf(

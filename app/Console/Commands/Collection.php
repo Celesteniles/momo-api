@@ -27,7 +27,12 @@ class Collection extends Command
     {
         $this->info('COLLECTION REQUETE EN COURS.');
 
-        \App\MomoApi\Src\Facades\MomoApi::collection();
+        // \App\MomoApi\Src\Facades\MomoApi::collection();
+
+        $phone = "242067230202";
+        $amount = 100;
+
+        \App\MomoApi\Src\Facades\MomoApi::collection($phone, $amount);
 
         $this->info('COLLECTION REQUETE TERMINEE');
     }
